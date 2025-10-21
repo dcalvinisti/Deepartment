@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario Alabanza - Deepartment</title>
+  <style>
+    body {
+      font-family: 'Helvetica', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-image: url('header-alabanza.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    form {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #444;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 25px;
+      background-color: #3b6ea5;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2d5785;
+    }
+    .success, .error {
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Alabanza Templo Mayor</h2>
+  </header>
+
+  <form id="alabanzaForm">
+    <h1>Registro de Información</h1>
+
+    <label>Ministerio / Equipo</label>
+    <input name="ministerio" value="ALABANZA TEMPLO MAYOR" required>
+
+    <label>Fecha y hora – Prueba de sonido + Ensayo</label>
+    <input name="fechaEnsayo" type="datetime-local" required>
+
+    <label>Encargado general</label>
+    <input name="encargado" required>
+
+    <label>Talkback</label>
+    <input name="talkback" required>
+
+    <label>Voces (separadas por + o coma)</label>
+    <textarea name="voces" rows="3" required></textarea>
+
+    <label>Instrumentos (una línea por rol)</label>
+    <textarea name="instrumentos" rows="4" required></textarea>
+
+    <label>Setlist – Alabanza</label>
+    <textarea name="alabanza" rows="4" required></textarea>
+
+    <label>Setlist – Adoración</label>
+    <textarea name="adoracion" rows="4" required></textarea>
+
+    <label>Rider – Elementos requeridos</label>
+    <textarea name="rider" rows="3" placeholder="Ej. 7 Micrófonos, Sistema de Monitoreo..." required></textarea>
+
+    <label>Número de personas para desayuno</label>
+    <input name="desayuno" type="number" required>
+
+    <label>Correo destino principal</label>
+    <input name="correoDestino" type="email" value="dcalvinisti@gmail.com" required>
+
+    <label>Nota adicional</label>
+    <textarea name="nota"></textarea>
+
+    <button type="submit">Enviar</button>
+    <p class="success">✅ Formulario enviado correctamente.</p>
+    <p class="error">❌ Ocurrió un error. Inténtalo de nuevo.</p>
+  </form>
+
+  <script>
+    const webhookURL = "https://hook.us2.make.com/z27hpu4bwq90pp5bi59sojr2dw443p43"; // reemplaza con tu URL real
+
+    document.getElementById("alabanzaForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const response = await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          form.reset();
+          document.querySelector(".success").style.display = "block";
+          document.querySelector(".error").style.display = "none";
+        } else {
+          throw new Error("Error al enviar");
+        }
+      } catch (err) {
+        document.querySelector(".success").style.display = "none";
+        document.querySelector(".error").style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
