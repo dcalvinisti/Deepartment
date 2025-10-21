@@ -1,153 +1,128 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulario Alabanza - Deepartment</title>
-  <style>
-    body {
-      font-family: 'Helvetica', sans-serif;
-      background-color: #f8f8f8;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-    header {
-      background-image: url('header-alabanza.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    }
-    form {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #444;
-    }
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-      font-size: 14px;
-    }
-    button {
-      margin-top: 25px;
-      background-color: #3b6ea5;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #2d5785;
-    }
-    .success, .error {
-      display: none;
-      text-align: center;
-      font-weight: bold;
-      margin-top: 20px;
-    }
-    .success { color: green; }
-    .error { color: red; }
-  </style>
+<!-- saved from url=(0103)file:///Users/user/Library/CloudStorage/OneDrive-Personal/Deepartment/webpages/formulario-alabanza.html -->
+<html lang="es" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Formulario Alabanza Templo Mayor</title>
+<style>
+:root {
+  --bg:#f7f7f7;--text:#222;--card:#fff;--accent:#3b6ea5;--muted:#777;
+}
+[data-theme="dark"]{
+  --bg:#121212;--text:#eee;--card:#1e1e1e;--accent:#4fa3ff;--muted:#aaa;
+}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);transition:.3s;}
+header{display:flex;align-items:center;justify-content:space-between;background:var(--card);
+box-shadow:0 2px 6px rgba(0,0,0,.2);padding:10px 20px;}
+header img{height:60px}
+.theme-btn{background:var(--accent);border:none;color:#fff;padding:8px 14px;
+border-radius:6px;cursor:pointer;}
+.container{max-width:900px;margin:30px auto;padding:20px;}
+.card{background:var(--card);padding:20px;border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:20px;}
+.card h2{margin-top:0;color:var(--accent);}
+label{font-weight:bold;display:block;margin-top:12px;}
+small{color:var(--muted);margin-left:5px;font-weight:normal;}
+input,textarea{width:100%;padding:10px;margin-top:4px;border-radius:5px;
+border:1px solid #ccc;background:var(--bg);color:var(--text);}
+button.submit{margin-top:20px;background:var(--accent);color:#fff;
+border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
+.success,.error{text-align:center;font-weight:bold;margin-top:20px;display:none;}
+.success{color:green}.error{color:red}
+</style>
 </head>
 <body>
-  <header>
-    <h2>Alabanza Templo Mayor</h2>
-  </header>
+<header>
+  <img src="file:///Users/user/Library/CloudStorage/OneDrive-Personal/Deepartment/webpages/Loco%20Casa%20+%20deep%201600x400.png" alt="Deepartment Logo">
+  <button class="theme-btn" id="themeToggle">🌙 / ☀️</button>
+</header>
 
+<div class="container">
   <form id="alabanzaForm">
-    <h1>Registro de Información</h1>
+    
+    <div class="card">
+      <h2>📍 Lugar / Logística</h2>
+      <label>Ministerio / Equipo <small>(Ej. ALABANZA TEMPLO MAYOR)</small></label>
+      <input name="ministerio" required="">
+      <label>Fecha y hora – Prueba de sonido + Ensayo 
+        <small>(Selecciona fecha y hora exactas)</small></label>
+      <input name="fechaEnsayo" type="datetime-local" required="">
+      <label>Encargado general <small>(Nombre completo)</small></label>
+      <input name="encargado" required="">
+      <label>Talkback <small>(Persona responsable del talkback)</small></label>
+      <input name="talkback" required="">
+      <label>Correo destino principal <small>(Quien recibirá el resumen)</small></label>
+      <input name="correoDestino" type="email" value="dcalvinisti@gmail.com" required="">
+    </div>
 
-    <label>Ministerio / Equipo</label>
-    <input name="ministerio" value="ALABANZA TEMPLO MAYOR" required>
+    <div class="card">
+      <h2>🎤 Voces e Instrumentos</h2>
+      <label>Voces <small>(Separadas por + o coma)</small></label>
+      <textarea name="voces" rows="3" required=""></textarea>
+      <label>Instrumentos <small>(Una línea por rol: “Piano 1: Nombre”)</small></label>
+      <textarea name="instrumentos" rows="4" required=""></textarea>
+    </div>
 
-    <label>Fecha y hora – Prueba de sonido + Ensayo</label>
-    <input name="fechaEnsayo" type="datetime-local" required>
+    <div class="card">
+      <h2>🎶 Setlist</h2>
+      <label>Bloque – Alabanza <small>(Una canción por línea, indica tono y fuente)</small></label>
+      <textarea name="alabanza" rows="4" required=""></textarea>
+      <label>Bloque – Adoración <small>(Una canción por línea)</small></label>
+      <textarea name="adoracion" rows="4" required=""></textarea>
+    </div>
 
-    <label>Encargado general</label>
-    <input name="encargado" required>
+    <div class="card">
+      <h2>🎚️ Rider Técnico</h2>
+      <label>Rider – Elementos requeridos 
+        <small>(Separa con comas)</small></label>
+      <textarea name="rider" rows="3" placeholder="7 Micrófonos | Voces, Sistema de Monitoreo, 8 Canales Secuencia..." required=""></textarea>
+      <label>Número de personas para desayuno <small>(Ej. 17)</small></label>
+      <input name="desayuno" type="number" required="">
+      <label>Nota adicional <small>(Comentarios u observaciones extra)</small></label>
+      <textarea name="nota"></textarea>
+    </div>
 
-    <label>Talkback</label>
-    <input name="talkback" required>
-
-    <label>Voces (separadas por + o coma)</label>
-    <textarea name="voces" rows="3" required></textarea>
-
-    <label>Instrumentos (una línea por rol)</label>
-    <textarea name="instrumentos" rows="4" required></textarea>
-
-    <label>Setlist – Alabanza</label>
-    <textarea name="alabanza" rows="4" required></textarea>
-
-    <label>Setlist – Adoración</label>
-    <textarea name="adoracion" rows="4" required></textarea>
-
-    <label>Rider – Elementos requeridos</label>
-    <textarea name="rider" rows="3" placeholder="Ej. 7 Micrófonos, Sistema de Monitoreo..." required></textarea>
-
-    <label>Número de personas para desayuno</label>
-    <input name="desayuno" type="number" required>
-
-    <label>Correo destino principal</label>
-    <input name="correoDestino" type="email" value="dcalvinisti@gmail.com" required>
-
-    <label>Nota adicional</label>
-    <textarea name="nota"></textarea>
-
-    <button type="submit">Enviar</button>
+    <button class="submit" type="submit">Enviar</button>
     <p class="success">✅ Formulario enviado correctamente.</p>
     <p class="error">❌ Ocurrió un error. Inténtalo de nuevo.</p>
   </form>
+</div>
 
-  <script>
-    const webhookURL = "https://hook.us2.make.com/z27hpu4bwq90pp5bi59sojr2dw443p43"; // reemplaza con tu URL real
+<script>
+const webhookURL = "https://hook.us2.make.com/z27hpu4bwq90pp5bi59sojr2dw443p43"; // <-- reemplaza con tu webhook de Make
 
-    document.getElementById("alabanzaForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const data = Object.fromEntries(new FormData(form).entries());
+// tema claro/oscuro
+const toggle=document.getElementById("themeToggle");
+const currentTheme=localStorage.getItem("theme");
+if(currentTheme==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+toggle.addEventListener("click",()=>{
+ const theme=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
+ document.documentElement.setAttribute("data-theme",theme);
+ localStorage.setItem("theme",theme);
+});
 
-      try {
-        const response = await fetch(webhookURL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+// envío a Make
+document.getElementById("alabanzaForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const form=e.target;
+ const data=Object.fromEntries(new FormData(form).entries());
+ try{
+   const res=await fetch(webhookURL,{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify(data)
+   });
+   if(res.ok){
+     form.reset();
+     document.querySelector(".success").style.display="block";
+     document.querySelector(".error").style.display="none";
+   }else throw new Error();
+ }catch{
+   document.querySelector(".success").style.display="none";
+   document.querySelector(".error").style.display="block";
+ }
+});
+</script>
 
-        if (response.ok) {
-          form.reset();
-          document.querySelector(".success").style.display = "block";
-          document.querySelector(".error").style.display = "none";
-        } else {
-          throw new Error("Error al enviar");
-        }
-      } catch (err) {
-        document.querySelector(".success").style.display = "none";
-        document.querySelector(".error").style.display = "block";
-      }
-    });
-  </script>
-</body>
-</html>
+
+</body></html>
