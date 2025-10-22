@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0103)file:///Users/user/Library/CloudStorage/OneDrive-Personal/Deepartment/webpages/formulario-alabanza.html -->
-<html lang="es" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="es">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Formulario Alabanza Templo Mayor</title>
 <style>
@@ -14,12 +14,12 @@
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);transition:.3s;}
 header{display:flex;align-items:center;justify-content:space-between;background:var(--card);
 box-shadow:0 2px 6px rgba(0,0,0,.2);padding:10px 20px;}
-header img{height:60px}
+header img{height:60px;transition:opacity .3s ease;}
 .theme-btn{background:var(--accent);border:none;color:#fff;padding:8px 14px;
 border-radius:6px;cursor:pointer;}
 .container{max-width:900px;margin:30px auto;padding:20px;}
-.card{background:var(--card);padding:20px;border-radius:10px;
-box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:20px;}
+.card{background:var(--card);padding:20px 40px;border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:25px;}
 .card h2{margin-top:0;color:var(--accent);}
 label{font-weight:bold;display:block;margin-top:12px;}
 small{color:var(--muted);margin-left:5px;font-weight:normal;}
@@ -33,7 +33,7 @@ border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
 </head>
 <body>
 <header>
-  <img src="file:///Users/user/Library/CloudStorage/OneDrive-Personal/Deepartment/webpages/Loco%20Casa%20+%20deep%201600x400.png" alt="Deepartment Logo">
+  <img id="logo" src="Loco%20Casa%20+%20deep%201600x400.png" alt="Deepartment Logo">
   <button class="theme-btn" id="themeToggle">🌙 / ☀️</button>
 </header>
 
@@ -43,41 +43,42 @@ border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
     <div class="card">
       <h2>📍 Lugar / Logística</h2>
       <label>Ministerio / Equipo <small>(Ej. ALABANZA TEMPLO MAYOR)</small></label>
-      <input name="ministerio" required="">
+      <input name="ministerio" required>
       <label>Fecha y hora – Prueba de sonido + Ensayo 
         <small>(Selecciona fecha y hora exactas)</small></label>
-      <input name="fechaEnsayo" type="datetime-local" required="">
+      <input name="fechaEnsayo" type="datetime-local" required>
       <label>Encargado general <small>(Nombre completo)</small></label>
-      <input name="encargado" required="">
+      <input name="encargado" required>
       <label>Talkback <small>(Persona responsable del talkback)</small></label>
-      <input name="talkback" required="">
+      <input name="talkback" required>
       <label>Correo destino principal <small>(Quien recibirá el resumen)</small></label>
-      <input name="correoDestino" type="email" value="dcalvinisti@gmail.com" required="">
+      <input name="correoDestino" type="email" value="dcalvinisti@gmail.com" required>
     </div>
 
     <div class="card">
       <h2>🎤 Voces e Instrumentos</h2>
       <label>Voces <small>(Separadas por + o coma)</small></label>
-      <textarea name="voces" rows="3" required=""></textarea>
+      <textarea name="voces" rows="3" required></textarea>
       <label>Instrumentos <small>(Una línea por rol: “Piano 1: Nombre”)</small></label>
-      <textarea name="instrumentos" rows="4" required=""></textarea>
+      <textarea name="instrumentos" rows="4" required></textarea>
     </div>
 
     <div class="card">
       <h2>🎶 Setlist</h2>
       <label>Bloque – Alabanza <small>(Una canción por línea, indica tono y fuente)</small></label>
-      <textarea name="alabanza" rows="4" required=""></textarea>
+      <textarea name="alabanza" rows="4" required></textarea>
       <label>Bloque – Adoración <small>(Una canción por línea)</small></label>
-      <textarea name="adoracion" rows="4" required=""></textarea>
+      <textarea name="adoracion" rows="4" required></textarea>
     </div>
 
     <div class="card">
       <h2>🎚️ Rider Técnico</h2>
       <label>Rider – Elementos requeridos 
         <small>(Separa con comas)</small></label>
-      <textarea name="rider" rows="3" placeholder="7 Micrófonos | Voces, Sistema de Monitoreo, 8 Canales Secuencia..." required=""></textarea>
+      <textarea name="rider" rows="3"
+        placeholder="7 Micrófonos | Voces, Sistema de Monitoreo, 8 Canales Secuencia..." required></textarea>
       <label>Número de personas para desayuno <small>(Ej. 17)</small></label>
-      <input name="desayuno" type="number" required="">
+      <input name="desayuno" type="number" required>
       <label>Nota adicional <small>(Comentarios u observaciones extra)</small></label>
       <textarea name="nota"></textarea>
     </div>
@@ -89,40 +90,49 @@ border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
 </div>
 
 <script>
-const webhookURL = "https://hook.us2.make.com/z27hpu4bwq90pp5bi59sojr2dw443p43"; // <-- reemplaza con tu webhook de Make
+const webhookURL = "TU_WEBHOOK_AQUI"; // <-- reemplaza con tu webhook de Make
 
-// tema claro/oscuro
-const toggle=document.getElementById("themeToggle");
-const currentTheme=localStorage.getItem("theme");
-if(currentTheme==="dark"){document.documentElement.setAttribute("data-theme","dark");}
-toggle.addEventListener("click",()=>{
- const theme=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";
- document.documentElement.setAttribute("data-theme",theme);
- localStorage.setItem("theme",theme);
+// Modo oscuro / claro con logos diferentes
+const toggle = document.getElementById("themeToggle");
+const logo = document.getElementById("logo");
+const lightLogo = "Loco%20Casa%20+%20deep%201600x400.png";
+const darkLogo = "Loco%20Casa%20+%20deep%201600x400%20white.png";
+
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  logo.src = theme === "dark" ? darkLogo : lightLogo;
+}
+
+const savedTheme = localStorage.getItem("theme") || "light";
+setTheme(savedTheme);
+
+toggle.addEventListener("click", () => {
+  const newTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  setTheme(newTheme);
 });
 
-// envío a Make
-document.getElementById("alabanzaForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const form=e.target;
- const data=Object.fromEntries(new FormData(form).entries());
- try{
-   const res=await fetch(webhookURL,{
-     method:"POST",
-     headers:{"Content-Type":"application/json"},
-     body:JSON.stringify(data)
-   });
-   if(res.ok){
-     form.reset();
-     document.querySelector(".success").style.display="block";
-     document.querySelector(".error").style.display="none";
-   }else throw new Error();
- }catch{
-   document.querySelector(".success").style.display="none";
-   document.querySelector(".error").style.display="block";
- }
+// envío del formulario
+document.getElementById("alabanzaForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form).entries());
+  try {
+    const res = await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      form.reset();
+      document.querySelector(".success").style.display = "block";
+      document.querySelector(".error").style.display = "none";
+    } else throw new Error();
+  } catch {
+    document.querySelector(".success").style.display = "none";
+    document.querySelector(".error").style.display = "block";
+  }
 });
 </script>
-
-
-</body></html>
+</body>
+</html>
