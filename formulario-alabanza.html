@@ -9,7 +9,7 @@
   --bg:#f7f7f7;--text:#222;--card:#fff;--accent:#3b6ea5;--muted:#777;
 }
 [data-theme="dark"]{
-  --bg:#121212;--text:#eee;--card:#1e1e1e;--accent:#4fa3ff;--muted:#aaa;
+  --bg:#121212;--text:#eee;--card:#252525;--accent:#4fa3ff;--muted:#aaa;
 }
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);transition:.3s;}
 header{display:flex;align-items:center;justify-content:space-between;background:var(--card);
@@ -18,17 +18,23 @@ header img{height:60px;transition:opacity .3s ease;}
 .theme-btn{background:var(--accent);border:none;color:#fff;padding:8px 14px;
 border-radius:6px;cursor:pointer;}
 .container{max-width:900px;margin:30px auto;padding:20px;}
-.card{background:var(--card);padding:20px 40px;border-radius:10px;
-box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:25px;}
-.card h2{margin-top:0;color:var(--accent);}
-label{font-weight:bold;display:block;margin-top:12px;}
+.card{background:var(--card);padding:30px 40px;border-radius:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.1);margin-bottom:25px;text-align:center;}
+.card h2{margin-top:0;color:var(--accent);text-align:center;}
+label{font-weight:bold;display:block;margin-top:12px;text-align:left;width:60%;margin-left:auto;margin-right:auto;}
 small{color:var(--muted);margin-left:5px;font-weight:normal;}
-input,textarea{width:100%;padding:10px;margin-top:4px;border-radius:5px;
-border:1px solid #ccc;background:var(--bg);color:var(--text);}
+input,textarea{width:60%;padding:10px;margin-top:4px;border-radius:5px;
+border:1px solid #ccc;background:var(--bg);color:var(--text);display:block;
+margin-left:auto;margin-right:auto;}
 button.submit{margin-top:20px;background:var(--accent);color:#fff;
 border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
-.success,.error{text-align:center;font-weight:bold;margin-top:20px;display:none;}
-.success{color:green}.error{color:red}
+button.submit:hover{opacity:0.9;}
+/* MODAL */
+.modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;
+background-color:rgba(0,0,0,0.6);}
+.modal-content{background:var(--card);color:var(--text);margin:15% auto;padding:30px;
+border-radius:10px;width:300px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,0.3);}
+.modal-content h3{margin:0 0 10px;color:var(--accent);}
 </style>
 </head>
 <body>
@@ -83,16 +89,24 @@ border:none;padding:12px 20px;border-radius:6px;font-size:16px;cursor:pointer;}
       <textarea name="nota"></textarea>
     </div>
 
-    <button class="submit" type="submit">Enviar</button>
-    <p class="success">✅ Formulario enviado correctamente.</p>
-    <p class="error">❌ Ocurrió un error. Inténtalo de nuevo.</p>
+    <div style="text-align:center;">
+      <button class="submit" type="submit">Enviar</button>
+    </div>
   </form>
 </div>
 
-<script>
-const webhookURL = "https://hook.us2.make.com/z27hpu4bwq9q0p5bi59sojr2dw4"; // <-- reemplaza con tu webhook de Make
+<!-- MODAL -->
+<div id="statusModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Enviando...</h3>
+    <p id="modalMessage">Por favor espera mientras procesamos tu información.</p>
+  </div>
+</div>
 
-// Modo oscuro / claro con logos diferentes
+<script>
+const webhookURL = "https://hook.us2.make.com/z27hpu4bwq9q0p5bi59sojr2dw4"; // tu webhook real
+
+// Tema oscuro / claro con logos diferentes
 const toggle = document.getElementById("themeToggle");
 const logo = document.getElementById("logo");
 const lightLogo = "Loco%20Casa%20+%20deep%201600x400.png";
@@ -103,34 +117,44 @@ function setTheme(theme) {
   localStorage.setItem("theme", theme);
   logo.src = theme === "dark" ? darkLogo : lightLogo;
 }
-
-const savedTheme = localStorage.getItem("theme") || "light";
-setTheme(savedTheme);
-
+setTheme(localStorage.getItem("theme") || "light");
 toggle.addEventListener("click", () => {
   const newTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
   setTheme(newTheme);
 });
 
-// envío del formulario
-document.getElementById("alabanzaForm").addEventListener("submit", async e => {
+// Modal helpers
+const modal=document.getElementById("statusModal");
+const modalTitle=document.getElementById("modalTitle");
+const modalMessage=document.getElementById("modalMessage");
+function showModal(title,msg,color){
+  modalTitle.textContent=title;
+  modalMessage.textContent=msg;
+  modalTitle.style.color=color;
+  modal.style.display="block";
+}
+function closeModalAfter(ms){setTimeout(()=>{modal.style.display="none";},ms);}
+
+// Envío del formulario
+document.getElementById("alabanzaForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const form = e.target;
-  const data = Object.fromEntries(new FormData(form).entries());
-  try {
-    const res = await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+  const form=e.target;
+  const data=Object.fromEntries(new FormData(form).entries());
+  showModal("Enviando...","Por favor espera mientras procesamos tu información.","var(--accent)");
+  try{
+    const res=await fetch(webhookURL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)
     });
-    if (res.ok) {
+    if(res.ok){
+      showModal("✅ Enviado","Tu formulario fue enviado correctamente.","green");
       form.reset();
-      document.querySelector(".success").style.display = "block";
-      document.querySelector(".error").style.display = "none";
-    } else throw new Error();
-  } catch {
-    document.querySelector(".success").style.display = "none";
-    document.querySelector(".error").style.display = "block";
+      closeModalAfter(2500);
+    }else throw new Error();
+  }catch{
+    showModal("❌ Error","Ocurrió un error al enviar la información.","red");
+    closeModalAfter(3000);
   }
 });
 </script>
